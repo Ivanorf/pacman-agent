@@ -269,14 +269,14 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
             'on_offense': 100
         }
 
-        # Si llevamos más de 2 bolas, priorizamos volver a casa
+        # if carrying more than 2 balls priorize returning home
         if carrying > 2:
             weights['home_dist'] = -10.0
             weights['distance_to_food'] = 0.0  # stop searching food
             weights['ghost_dist'] = 10.0 # avoid ghosts more strongly
             weights['on_offense'] = 0.0  # focus on returning home
 
-        # Si un fantasma está muy cerca, priorizamos huir
+        # If ghost very near priorize escape from it
         if nearest_ghost_dist <= 2:
             weights['distance_to_food'] = 0  # stop searching food
             weights['successor_score'] = 0 # score is irrelevant
@@ -402,4 +402,5 @@ class DefensiveReflexAgent(ReflexCaptureAgent):
             return self.start
         ys = [p[1] for p in open_positions]
         median_y = sorted(ys)[len(ys)//2]
+
         return (border_x, median_y)
